@@ -1,0 +1,103 @@
+/* Add some basic styling */
+body {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+    padding-left: 200px;
+    background-color: #ddd;
+}
+
+/* Style the navigation bar */
+.navbar {
+    overflow: hidden;
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    height:55px;
+    width: 1335px;
+  }
+
+  .navbar a {
+    float: right;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 18px 20px;
+    text-decoration: none;
+    font-size: 17px;
+    
+  }
+  
+  .navbar a:hover {
+    background: #0E21A0;
+    border-radius:30px;
+  }
+
+
+/* Basic styling for the sidebar */
+.sidebar {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    top: 55px;
+    left: 0;
+    background-color: #3085C3;
+    padding-top: 0px; /* Upper padding */
+}
+
+/* Style for the links inside the sidebar */
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    display: block;
+    padding-top: 20px;
+    ;
+}
+
+.Logo {
+    position: fixed;
+    top:0px;
+    left:0px;
+}
+
+/* Change link color on hover */
+.sidebar a:hover {
+    background-color: #0E21A0;
+    border-radius: 20px;
+}
+
+.dropbtn {
+background-color: #04AA6D;
+color: white;
+padding: 16px;
+font-size: 16px;
+border: none;
+}
+
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+.dropdown-content {
+display: none;
+position: relative;
+background-color: #3085C3;
+min-width: 200px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 12;
+}
+
+.dropdown-content a {
+color: white;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+
+.dropdown-content a:hover {background-color: #0E21A0; border-radius: 20px;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}

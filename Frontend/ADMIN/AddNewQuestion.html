@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Question</title>
+    <link rel="stylesheet" type="text/css" href="/Style.css">   
+    <link rel="stylesheet" type="text/css" href="/addnewstudentstyle.css">
+    
+</head>
+<body>
+    
+    <div class="navbar">
+        <div class="buttons" style="position: absolute; margin-left: 1100px;">
+            <button class="btn1" style="height: 38px; font-size: 15px; padding-top: 11px; background-color: #0079FF;" >Setting</button>
+            <button class="btn2" style="height: 38px; font-size: 15px; padding-top: 11px;background-color:red">Logout</button>
+            </div>
+    </div>
+    
+    <div class="Logo">
+        <img src="/QuizPay.png" alt="logo1" width="200px" height="55px">
+    </div>
+    
+    <div class="sidebar">
+      <a href="/auth/Admin">Admin Dashboard</a>
+      <a href="/auth/UserList">leaderboard</a>
+      <a href="/auth/AddNewQuestion">Add question</a>
+      <a href="/auth/AddNewContest">Add New contest</a>
+</div>
+    
+    <form class="form" method="post" action="/auth/Question">
+<div class="box" style="height:632px;">
+
+    <div class="container">
+    <h2>Add New Question</h2>
+    <hr>
+<p>
+    <label for="Question"><b>Question</b></label>
+    <input type="text" placeholder="Enter Question" style="margin-left:75px; border-radius:10px;" name="Question" required>
+</p>   
+<p>
+  <label for="Option_A" style="margin-left: 170px;"><b>(a)</b></label>
+  <input type="text" placeholder="Enter Option (a)" style="margin-left:5px; border-radius:10px;width: 300px;" name="Option_A" required>
+
+  <label for="Option_B"style="margin-left: 115px;"><b>(b)</b></label>
+  <input type="text" placeholder="Enter Option (b)" style="margin-left:5px; border-radius:10px;width: 300px;" name="Option_B" required>
+</p>
+<p>
+  <label for="Option_C" style="margin-left: 170px;"><b>(c)</b></label>
+  <input type="text" placeholder="Enter Option (c)" style="margin-left:5px; border-radius:10px;width: 300px;" name="Option_C" required>
+
+  <label for="Option_D"style="margin-left: 115px;"><b>(d)</b></label>
+  <input type="text" placeholder="Enter Option (d)" style="margin-left:5px; border-radius:10px;width: 300px;" name="Option_D" required>
+</p>
+<p>
+  <label for="Answer"><b>Answer</b></label>
+  <input type="text" placeholder="Enter Correct Answer (a, b, c, or d)" style=" margin-left:85px; border-radius:10px;" name="Answer" required>
+</p>
+    <div class="clearfix">
+      <button type="submit" class="Create" style="margin-left:500px;">Create</button>
+    </div>
+</div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+  const form = document.querySelector('.form');
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const requestData = {};
+    
+    // Get options as an array
+    const optionsArray = [
+      { label: 'a', value: formData.get('Option_A') },
+      { label: 'b', value: formData.get('Option_B') },
+      { label: 'c', value: formData.get('Option_C') },
+      { label: 'd', value: formData.get('Option_D') }
+    ];
+
+    // Assign other form data to the request payload
+    requestData.Topic_Name = formData.get('Topic_Name');
+    requestData.Class = formData.get('Class');
+    requestData.Subject = formData.get('Subject');
+    requestData.Question = formData.get('Question');
+    requestData.Options = optionsArray;
+    requestData.Answer = formData.get('Answer');
+
+    fetch('/auth/AddNewQuestion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    })
+      .then(function (response) {
+        if (response.ok) {
+          // Handle success and show popup notification
+          alert('Data has been successfully saved in the backend!');
+          form.reset(); // Reset the form
+        } else {
+          // Handle error
+          alert('An error occurred while saving the data.');
+        }
+      })
+      .catch(function (error) {
+        // Handle network errors
+        console.error('Error while saving data:', error);
+        alert('An error occurred while saving the data.');
+      });
+  });
+});
+
+  </script>
+
+</body>
+</html>
+

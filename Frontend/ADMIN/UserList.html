@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"> 
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schools list</title>
+    <link rel="stylesheet" type="text/css" href="/Style.css">   
+    <link rel="stylesheet" type="text/css" href="/addnewstudentstyle.css">
+    <link rel="stylesheet" type="text/css" href="/stylesearchbox.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="buttons" style="position: absolute; margin-left: 1100px;">
+    <button class="btn1" style="height: 38px; font-size: 15px; padding-top: 11px; background-color: #0079FF;" >Setting</button>
+    <button class="btn2" style="height: 38px; font-size: 15px; padding-top: 11px;background-color:red">Logout</button>
+    </div>
+    <h1 style="text-align: left; font-family: 'Noto Sans', sans-serif;margin-left: 40px; font-size:25px;color: black;">Schools List</h1>
+</div>
+
+<div class="Logo">
+    <img src="/QuizPay.png" alt="logo1" width="200px" height="55px">
+</div>
+<div class="sidebar">
+  <a href="/auth/Admin">Admin Dashboard</a>
+  <a href="/auth/UserList">leaderboard</a>
+  <a href="/auth/AddNewQuestion">Add question</a>
+  <a href="/auth/AddNewContest">Add New contest</a>
+</div>
+
+<div class="box">
+    <div class="container" style=" margin-left: -30px; margin-top: 30px;">
+      
+
+    <div class="search-container" style=" margin-right: -17px;" >
+      <input type="text" placeholder="Search Name" id="myInput" style="margin-top: -48px; border-radius: 5px;height: 30px;">
+      <button class="search-button" style="margin-top: -48px; width: 80px; height: 30px;">Search</button>
+  </div>
+     </div>
+     <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: -18px;
+        }
+        
+        th, td {
+          padding: 8px;
+          text-align: left;
+          border-bottom: 1px solid #DDD;
+        }
+        
+        tr:hover {background-color: #D6EEEE;}
+     </style>
+
+    <table>
+        <tr style="background-color: gold; ">
+          <th>School Name</th>
+          <th>School Code</th>
+          <th>State</th>
+          <th>Region</th>
+          <th>Account Manager</th>
+          <th>Action</th>
+        </tr>
+        <tbody id="myTable">
+        </tbody>
+
+    </table>
+  </div>
+</div>
+
+<script>
+  fetch('http://localhost:3000/School')
+  .then(response => response.json()) 
+  .then(data => {
+    const tableBody = document.getElementById('myTable');
+    data.forEach(item => {
+      const row = myTable.insertRow();
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+      const cell4 = row.insertCell(3);
+      const cell5 = row.insertCell(4);
+      const cell6 = row.insertCell(5);
+     
+      cell1.innerHTML = item.School_Name;
+      cell2.innerHTML = item.School_Code;
+      cell3.innerHTML = item.State;
+      cell4.innerHTML = item.Region;
+      cell5.innerHTML = item.Account_Manager;
+
+      // // Create a button in the "Action" column
+      const loginButton = document.createElement('button');
+        loginButton.textContent = 'Login';
+        loginButton.style.height ='20px';
+        loginButton.style.width ='80px';
+        loginButton.style.marginTop ='0px';
+        loginButton.style.marginBottom ='0px';
+        loginButton.style.display = 'flex';
+        loginButton.style.alignItems = 'center';
+        loginButton.style.justifyContent = 'center';
+        loginButton.addEventListener('click', function () {
+  // Fetch School_Code and Password for the clicked school
+  fetch(`/fetchSchoolCredentials?schoolCode=${item.School_Code}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Failed to fetch school credentials');
+    }
+  })
+  
+  .then(schoolCredentials => {
+    
+    // Now you have the School_Code and Password, you can make a request to your /login API
+    return fetch('/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        schoolCode: schoolCredentials.School_Code,
+        password: schoolCredentials.Password,
+      }),
+    });
+  })
+  .then(response => {
+    if (response.ok) {
+      window.open(`/auth/AnalyticsDashboard?loginSuccess=true`, '_blank');
+    } else {
+      throw new Error('Login failed');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  alert('Login failed. Check the console for more details.');
+
+  });
+});
+        cell6.appendChild(loginButton);
+    });
+      const rowCount = data.length;
+
+      // Save the count in local storage
+      localStorage.setItem('rowCount', rowCount);
+      })
+
+  .catch(error => console.error('Error:', error));
+
+</script>
+
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>
+
+</body>
+</html>

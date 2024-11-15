@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/Style.css">
+    <link rel="stylesheet" href="/addnewstudentstyle.css">
+    <link rel="stylesheet" href="/stylesearchbox.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="buttons" style="position: absolute; margin-left: 1100px;">
+    <button class="btn1" style="height: 38px; font-size: 15px; padding-top: 11px;  background-color: #0079FF;" >Setting</button>
+    <button class="btn2" style="height: 38px; font-size: 15px; padding-top: 11px;  background-color:red">Logout</button>
+    </div>
+    <h1 style="text-align: left; font-family: 'Noto Sans', sans-serif;margin-left: 40px; font-size:25px;color: black;">Admin Dashboard</h1>
+</div>
+
+<div class="Logo">
+    <img src="/QuizPay.png" alt="logo1" width="200px" height="55px">
+</div>
+
+<div class="sidebar">
+        <a href="/auth/Admin">Admin Dashboard</a>
+        <a href="/auth/UserList">leaderboard</a>
+        <a href="/auth/AddNewQuestion">Add question</a>
+        <a href="/auth/AddNewContest">Add New contest</a>
+</div>
+
+<div class="Schoolprofile" style="margin-top:67px; margin-left: 12px; height: 160px; width: 270px; z-index:-2 ; border-radius: 10px; background-color:greenyellow; position: absolute;">
+
+  <h2 style="text-align: center; font-family: 'Noto Sans', sans-serif; padding-top: 20px;"> TOTAL USERS</h2>
+  <h2 style="text-align: center; font-family: 'Noto Sans', sans-serif; padding-top: 0px;"><p id="schoolcount"></h2>
+  
+</div>
+
+<div class="charts" style="margin-top:67px; margin-left: 295px; height: 160px; width: 1010px; border-radius: 10px; z-index:-2; background-color:#EEEDED; position: absolute;">
+  <div class="chart-card" style="margin-top:10px; width: 970px; padding-left: 20px; position: absolute;">
+      <h4 class="chart title"style="margin-left: 420px ; margin-bottom: -10px;margin-top:0px; width:200px ">USERS CHART</h4>
+      <div id="bar-chart"></div>
+      
+  </div>
+</div>
+
+<div class="Studentprofile" style="margin-top:240px; margin-left: 12px; height: 160px; width: 270px; z-index:-2; border-radius: 10px; background-color:pink; position: absolute;">
+
+  <h2 style="text-align: center; font-family: 'Noto Sans', sans-serif; padding-top: 20px;"> CONTEST JOINED BY UESRS</h2>
+  <h2 style="text-align: center; font-family: 'Noto Sans', sans-serif; padding-top: px;"><p id="studentcount"></p></h2>
+  
+</div>
+
+<div class="charts1" style="margin-top:240px; margin-left: 295px; height: 160px; width: 1010px; border-radius: 10px; z-index:-2 ; background-color:#EEEDED; position: absolute;">
+  <div class="chart-card" style=" margin-top: -10px; width: 970px; padding-left: 20px; position: absolute;">
+      <h4 class="chart title"style="margin-left: 420px; margin-bottom: -30px; padding-bottom: 18px;  width:200px; ">CONTEST JOINED PER DAY</h4>
+      <div id="line-chart"></div>
+  </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.43.0/apexcharts.min.js"></script>
+<script src="/adminschoolscript.js"></script>
+<script src="/adminstudentscript.js"></script>
+
+<script>
+  fetch('http://localhost:3000/schoolcount')
+    .then(response => response.json())
+    .then(data => {
+      const count = data.count;
+      const countElement = document.querySelector('#schoolcount');
+      countElement.textContent = count;
+    })
+    .catch(error => console.error('Error:', error));
+</script>
+
+<script>
+  fetch('http://localhost:3000/studentcount')
+    .then(response => response.json())
+    .then(data => {
+      const count = data.count;
+      const countElement = document.querySelector('#studentcount');
+      countElement.textContent = count;
+    })
+</script>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Topic Link</title>
+    <link rel="stylesheet" type="text/css" href="/Style.css">   
+    <link rel="stylesheet" type="text/css" href="/addnewstudentstyle.css">
+    
+</head>
+<body>
+    
+    <div class="navbar">
+        <div class="buttons" style="position: absolute; margin-left: 1100px;">
+            <button class="btn1" style="height: 38px; font-size: 15px; padding-top: 11px; background-color: #0079FF;" >Setting</button>
+            <button class="btn2" style="height: 38px; font-size: 15px; padding-top: 11px;background-color:red">Logout</button>
+            </div>
+    </div>
+    
+    <div class="Logo">
+        <img src="/QuizPay.png" alt="logo1" width="200px" height="55px">
+    </div>
+    
+    <div class="sidebar">
+      <a href="/auth/Admin">Admin Dashboard</a>
+      <a href="/auth/UserList">leaderboard</a>
+      <a href="/auth/AddNewQuestion">Add question</a>
+      <a href="/auth/AddNewContest">Add New contest</a>
+</div>
+    
+<form class="form" method="post" action="/auth/Topic_Link">
+<div class="box" style="height:632px;">
+
+    <div class="container">
+    <h2>Add New Topic Link</h2>
+    <hr>
+<p>
+    <label for="Topic Name"><b>Topic Name</b></label>
+    <input type="text" placeholder="Enter Topic Name" style="margin-left:55px; border-radius:10px;" name="Topic_Name" required>
+</p>
+<p>
+    <label for="Class"><b>Class</b></label>
+    <input type="text" placeholder="Enter Class" style="margin-left:102px; border-radius:10px;" name="Class" required>
+</p> 
+<p>
+    <label for="Subject"><b>Subject</b></label>
+    <input type="text" placeholder="Enter Subject" style="margin-left:102px; border-radius:10px;" name="Subject" required>
+</p> 
+<p>
+    <label for="Topic URL"><b>Topic URL</b></label>
+    <input type="text" placeholder="Enter URL" style="margin-left:65px; border-radius:10px;" name="Topic_URL" required>
+</p>   
+    <div class="clearfix">
+      <button type="submit" class="Create" style="margin-left:500px;">Create</button>
+    </div>
+</div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('.form');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const requestData = {};
+        for (let entry of formData.entries()) {
+          requestData[entry[0]] = entry[1];
+        }
+        fetch('/auth/AddNewContest', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        })
+          .then(function (response) {
+            if (response.ok) {
+              // Handle success and show popup notification
+              alert('Data has been successfully saved in the backend!');
+              form.reset(); // Reset the form
+            } else {
+              // Handle error
+              alert('An error occurred while saving the data.');
+            }
+          })
+          .catch(function (error) {
+            // Handle network errors
+            console.error('Error while saving data:', error);
+            alert('An error occurred while saving the data.');
+          });
+      });
+    });
+  </script>
+
+</body>
+</html>
+

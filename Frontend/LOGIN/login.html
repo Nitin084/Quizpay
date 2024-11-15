@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Login page</title>
+</head>
+<style>
+body{background:#CAEDFF;}
+
+video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width:auto;
+    height: 70%;
+    z-index: -1;
+    object-fit: cover; /* Adjust the object-fit property */
+}
+
+.Loginbox{
+  position: absolute;
+  height: 550px;
+  border-radius: 10px;
+  margin-left: 950px;
+  margin-top: 50px;
+  width: 400px;
+  padding: 16px;
+  background-color: white;
+}
+
+
+</style>
+
+<body style="text-align: center; font-family: 'Noto Sans', sans-serif;">
+  <video autoplay muted loop>
+      <source src="/V2.mp4" type="video/mp4">
+       Your browser does not support the video tag.
+  </video>
+
+
+
+<form  class="Loginbox" action="/auth/login" method="post" style="background-color:rgba(0, 0, 0, 0);">
+<div >
+<h1 style="font-size: 50px;">Login</h1>
+<input type ="text" name="PhoneNumber" placeholder ="Enter PhoneNumber" required style= " margin-top: 33px; height: 35px; border-radius:50px ;width:350px ;"><br></br>
+<input type = "password" name="password" placeholder = " Enter password" required style="height: 35px; border-radius:50px ;width:350px; " ><br></br>
+<button  style=" font-size: 15px; height: 40px; width:200px; background-color: #24a0ed; border-radius: 50px; margin-top: 10px;">SUBMIT</button><br></br>
+<a href ="Forgetpassword.html" > Forget password?</a><br></br>
+</div>
+</form>
+</body>
+</html>
+
