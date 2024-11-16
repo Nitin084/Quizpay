@@ -43,7 +43,7 @@ app.use(bodyParser.json({ limit: '10mb' }));
 //
 app.use(express.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8000
 app.listen(PORT);
 
 mongoose.connect(process.env.db_link)
@@ -63,7 +63,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
     }
   }));
 
-app.listen(3000, '0.0.0.0');
+app.listen(8000, '0.0.0.0');
 
 const authRouter=express.Router();
 
